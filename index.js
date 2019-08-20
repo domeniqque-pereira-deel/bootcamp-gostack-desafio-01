@@ -2,6 +2,7 @@ const express = require("express");
 
 const server = express();
 const projects = [];
+let totalRequest = 0;
 
 /* Functions */
 const _getProjectById = id =>
@@ -9,6 +10,14 @@ const _getProjectById = id =>
 
 /* Middlewares */
 server.use(express.json());
+
+server.use((req, res, next) => {
+  totalRequest++;
+
+  console.log(`Number of requests: ${totalRequest}`);
+
+  return next();
+});
 
 function validateProjectCreation(req, res, next) {
   const { id, title } = req.body;
