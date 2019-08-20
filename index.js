@@ -61,11 +61,15 @@ server.get("/", (req, res) => {
   });
 });
 
+server.get("/projects", (req, res) => {
+  return res.json(projects);
+});
+
 // Create Project
 server.post("/projects", validateProjectCreation, (req, res) => {
   const { id, title } = req.body;
 
-  projects.push({ id, title });
+  projects.push({ id, title, tasks: [] });
 
   return res.status(201).json(projects);
 });
@@ -76,7 +80,7 @@ server.put("/projects/:id", checkIfProjectExists, (req, res) => {
 
   req.project.title = title;
 
-  return res.json(req.project);
+  return res.json(projects);
 });
 
 /* Settings */
