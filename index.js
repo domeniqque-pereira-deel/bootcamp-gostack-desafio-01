@@ -15,11 +15,11 @@ function validateProjectCreation(req, res, next) {
   const errors = [];
 
   if (!id) {
-    errors.push("Project `id` is required");
+    errors.push("Project id is required");
   }
 
   if (!title) {
-    errors.push("Project `title` is required");
+    errors.push("Project title is required");
   }
 
   const project = _getProjectById(id);
@@ -30,6 +30,18 @@ function validateProjectCreation(req, res, next) {
 
   if (errors.length > 0) {
     return res.status(400).json({ errors });
+  }
+
+  return next();
+}
+
+function validateTaskCreation(req, res, next) {
+  const { title } = req.body;
+
+  if (!title) {
+    return res.status(400).json({
+      error: "Task title is required"
+    });
   }
 
   return next();
@@ -91,6 +103,21 @@ server.delete("/projects/:id", checkIfProjectExists, (req, res) => {
 
   return res.send();
 });
+
+// Create Tasks
+server.post(
+  "/projects/:id/tasks",
+  checkIfProjectExists,
+  validateTaskCreation,
+  (req, res) => {
+    const { project } = req;
+    const { title } = req.body;
+
+    project.tasks.push(title);
+
+    return res.status(201).json(projects);
+  }
+);
 
 /* Settings */
 server.listen(3000);
