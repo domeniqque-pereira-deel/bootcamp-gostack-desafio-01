@@ -83,5 +83,14 @@ server.put("/projects/:id", checkIfProjectExists, (req, res) => {
   return res.json(projects);
 });
 
+// Delete Project
+server.delete("/projects/:id", checkIfProjectExists, (req, res) => {
+  const index = projects.indexOf(req.project);
+
+  projects.splice(index, 1);
+
+  return res.send();
+});
+
 /* Settings */
 server.listen(3000);
