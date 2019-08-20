@@ -1,5 +1,7 @@
 # Desafio 01. Conceitos do NodeJS
 
+Resolução do Desafio 01 no **Bootcamp GoStack** da **RocketSeat**
+
 Crie uma aplicação do zero utilizando Express.
 
 Essa aplicação será utilizada para armazenar projetos e suas tarefas.
@@ -35,6 +37,7 @@ Se eu chamar a rota `POST /projects` repassando `{ id: 1, title: 'Novo projeto' 
 - Crie um middleware que será utilizado em todas rotas que recebem o ID do projeto nos parâmetros da URL que verifica se o projeto com aquele ID existe. Se não existir retorne um erro, caso contrário permita a requisição continuar normalmente;
 
 - Crie um middleware global chamado em todas requisições que imprime (`console.log`) uma contagem de quantas requisições foram feitas na aplicação até então;
+  <<<<<<< HEAD
 
 ## Entrega
 
@@ -42,4 +45,6 @@ Esse desafio **não precisa ser entregue** e não receberá correção, mas voc�
 
 Após concluir o desafio, adicionar esse código ao seu Github é uma boa forma de demonstrar seus conhecimentos para oportunidades futuras.
 
-“Sua única limitação é você mesmo”!
+# “Sua única limitação é você mesmo”!
+
+> > > > > > > doc: add readme
