@@ -10,7 +10,7 @@ const _getProjectById = id =>
 /* Middlewares */
 server.use(express.json());
 
-function validateCreateProject(req, res, next) {
+function validateProjectCreation(req, res, next) {
   const { id, title } = req.body;
   const errors = [];
 
@@ -25,12 +25,27 @@ function validateCreateProject(req, res, next) {
   const project = _getProjectById(id);
 
   if (project) {
-    errors.push(`Project with id \`${id}\` already exists`);
+    errors.push(`Project with \`id\` ${id} already exists`);
   }
 
   if (errors.length > 0) {
     return res.status(400).json({ errors });
   }
+
+  return next();
+}
+
+function checkIfProjectExists(req, res, next) {
+  const { id } = req.params;
+  const project = _getProjectById(id);
+
+  if (!project) {
+    return res.status(400).json({
+      error: "Project does not exits"
+    });
+  }
+
+  req.project = project;
 
   return next();
 }
@@ -47,12 +62,21 @@ server.get("/", (req, res) => {
 });
 
 // Create Project
-server.post("/projects", validateCreateProject, (req, res) => {
+server.post("/projects", validateProjectCreation, (req, res) => {
   const { id, title } = req.body;
 
   projects.push({ id, title });
 
-  return res.json(projects);
+  return res.status(201).json(projects);
+});
+
+// Edit Projects
+server.put("/projects/:id", checkIfProjectExists, (req, res) => {
+  const { title } = req.body;
+
+  req.project.title = title;
+
+  return res.json(req.project);
 });
 
 /* Settings */
